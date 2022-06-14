@@ -1,7 +1,7 @@
 import json
 import xlsxwriter
 import requests
-
+from datetime import date
 
 response = requests.get("https://api.baubuddy.de/dev/index.php/v1/vehicles/select/active")
 
@@ -18,7 +18,13 @@ inp = input('Enter parameters separated with coma: ')
 
 def create_xlsx_file(input,filtered_arr):
 
-    workbook = xlsxwriter.Workbook('vero.xlsx')
+    current_date = date.today()
+
+    current_date_iso = current_date.isoformat()
+
+    name_of_generated_file = f"vehicles_{current_date_iso}.xlsx"
+
+    workbook = xlsxwriter.Workbook(name_of_generated_file)
     worksheet = workbook.add_worksheet('Data')
 
     worksheet.write('A1', "Gruppe")
